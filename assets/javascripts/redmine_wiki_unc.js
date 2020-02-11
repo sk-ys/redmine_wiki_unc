@@ -2,16 +2,16 @@
   if(typeof jsToolBar === 'undefined') return false;
     
   // Create button
-  var modalHtml = '<h3 class="title">Insert link</h3>'
+  var modalHtml = '<h3 class="title">' + WikiUnc.context.labelInsertLink + '</h3>'
                 + '<p>'
-                +   'Address<br>'
+                +   WikiUnc.context.labelAddress + '<br>'
                 +   '<input type="text" name="address" style="width:100%" id="js-redmine-wiki-unc-input-address"><br>'
-                +   '<span style="float:right"><a href="javascript:void(0)" id="js-redmine-wiki-unc-a-try-link">Try link</a></span>'
+                +   '<span style="float:right"><a href="javascript:void(0)" id="js-redmine-wiki-unc-a-try-link">' + WikiUnc.context.labelTryLink + '</a></span>'
                 + '</p>'
-                + '<p>Text to display<br><input type="text" name="address" style="width:100%" id="js-redmine-wiki-unc-input-text"></p>'
+                + '<p>' + WikiUnc.context.labelTextToDisplay + '<br><input type="text" name="address" style="width:100%" id="js-redmine-wiki-unc-input-text"></p>'
                 + '<p class="buttons">'
                 +   '<input type="button" value="OK"     id="js-redmine-wiki-unc-button-ok" disabled> '
-                +   '<input type="button" value="Cancel" id="js-redmine-wiki-unc-button-cancel">'
+                +   '<input type="button" value="' + WikiUnc.context.buttonCancel + '" id="js-redmine-wiki-unc-button-cancel">'
                 + '</p>';
                   
   var getCleanedAddress = function(inputAddress) {
@@ -27,7 +27,7 @@
   };
                   
   var button = {
-    title: 'Insert link',
+    title: WikiUnc.context.labelInsertLink,
     type:  'button',
     name:  'wiki_unc',
     class: 'jstb_wiki_unc',

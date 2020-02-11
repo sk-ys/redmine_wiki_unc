@@ -7,3 +7,16 @@
     end
   end
 %>
+<% if header_tags_content.present? && header_tags_content.include?('/jstoolbar/') %>
+  <script type="text/javascript">
+  //<![CDATA[
+  let WikiUnc = {context: {
+    labelInsertLink: "<%= l(:label_insert_link) %>",
+    labelTryLink: "<%= l(:label_try_link) %>",
+    labelAddress: "<%= l(:label_address) %>",
+    labelTextToDisplay: "<%= l(:label_text_to_display) %>",
+    buttonCancel: "<%= l(:button_cancel) %>"
+  }};
+  //]]>
+  </script>
+<% end %>

@@ -1,3 +1,7 @@
 # English strings go here
 en:
   my_label: "My label"
+  label_insert_link: Insert link
+  label_try_link: Try link
+  label_address: Address
+  label_text_to_display: Text to display
