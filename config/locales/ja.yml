@@ -1,0 +1,7 @@
+# Japanese strings go here
+ja:
+  my_label: "My label"
+  label_insert_link: ネットワークフォルダ/ファイルへのリンクの挿入
+  label_try_link: リンクのテスト
+  label_address: アドレス
+  label_text_to_display: 表示文字列
