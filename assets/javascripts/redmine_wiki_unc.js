@@ -25,7 +25,23 @@
   var isInputValid = function(inputAddress) {
     return getCleanedAddress(inputAddress) != '';
   };
-                  
+  var getBasename = function(path) {
+    try {
+      return path.replace(/[\\\/]$/, '').replace(/^.*[\\\/]/, '');
+    }
+    catch(err) {
+      return "";
+    }
+  };
+  var autoInputBasename = function(inputText, inputAddress) {
+    if (inputText.val() == "") {
+      var basename = getBasename(getCleanedAddress(inputAddress));
+      if (basename != "") {
+        inputText.val(basename);
+      }
+    }
+  }
+
   var button = {
     title: WikiUnc.context.labelInsertLink,
     type:  'button',
@@ -46,6 +62,7 @@
             buttonOk.prop('disabled', false);
             tryLink.attr('href', getCleanedAddress(inputAddress));
             tryLink.attr('target', '_blank');
+            autoInputBasename(inputText, inputAddress);
           } else {
             buttonOk.prop('disabled', true);
             tryLink.attr('href', 'javascript:void(0)');
