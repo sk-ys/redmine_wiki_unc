@@ -56,8 +56,9 @@
         var tryLink      = $('#js-redmine-wiki-unc-a-try-link');
         var buttonOk     = $('#js-redmine-wiki-unc-button-ok');
         var buttonCancel = $('#js-redmine-wiki-unc-button-cancel');
-        
-        inputAddress.keyup(function(){
+
+        var updateInputAddress = function(){
+          console.log('updateInputAddress');
           if (isInputValid(inputAddress)) {
             buttonOk.prop('disabled', false);
             tryLink.attr('href', getCleanedAddress(inputAddress));
@@ -68,6 +69,10 @@
             tryLink.attr('href', 'javascript:void(0)');
             tryLink.removeAttr('target');
           }
+        }
+        inputAddress.keyup(updateInputAddress);
+        inputAddress.on('paste', function(){
+          setTimeout(updateInputAddress, 100);  // Failed if no delay
         });
         inputAddress.keypress(function(e){
           if (e.keyCode === 13) { // 13 is enter
