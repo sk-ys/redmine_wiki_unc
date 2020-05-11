@@ -33,9 +33,7 @@ class UncHelper
     return "(No parameters are specified. A UNC path is needed at least.)" if args.empty?
     unc, label = parse_args(args)
 
-    return <<TEMPLATE
-<a href=\"#{unc_to_file_proto(unc)}\">#{label}</a>
-TEMPLATE
+    return "<span class='path_unc' name=#{label}>".html_safe + "\"#{unc}\"" + "</span>".html_safe
   end
 
 end
@@ -56,7 +54,7 @@ DESC
 
     macro :unc do |obj, args|
       h = UncHelper.new
-      h.get_tag(args).html_safe
+      h.get_tag(args)
     end
   end
 end
