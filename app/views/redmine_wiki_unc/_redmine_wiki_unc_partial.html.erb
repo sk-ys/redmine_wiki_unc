@@ -1,9 +1,15 @@
 <%
   header_tags_content = content_for(:header_tags)
+  if header_tags_content.present?
+    content_for :header_tags do
+      javascript_include_tag('redmine_wiki_unc_replace_path.js', plugin: 'redmine_wiki_unc') +
+      stylesheet_link_tag('redmine_wiki_unc.css', plugin: 'redmine_wiki_unc')
+    end
+  end
+
   if header_tags_content.present? && header_tags_content.include?('/jstoolbar/')
     content_for :header_tags do
-      javascript_include_tag('redmine_wiki_unc.js', plugin: 'redmine_wiki_unc', 'id' => 'js-redmine-wiki-unc-script-tag', 'data-text-formatting' => Setting.text_formatting) +
-      stylesheet_link_tag('redmine_wiki_unc.css', plugin: 'redmine_wiki_unc')
+      javascript_include_tag('redmine_wiki_unc.js', plugin: 'redmine_wiki_unc', 'id' => 'js-redmine-wiki-unc-script-tag', 'data-text-formatting' => Setting.text_formatting)
     end
   end
 %>
