@@ -1,4 +1,4 @@
-var replaceUncTag = function(){
+var formatUncTag = function(){
     var uncToFileProto = function(path_unc){
         return 'file:///' + path_unc.replace(/"/g, '').replace(/\\/g, '/')
     }
@@ -14,8 +14,8 @@ var replaceUncTag = function(){
 
 $(function () {
     $(document).on('DOMSubtreeModified', 'div.wiki-preview', function() {
-        replaceUncTag();
+        formatUncTag();
     });
 
-    replaceUncTag();
+    formatUncTag();
 });
