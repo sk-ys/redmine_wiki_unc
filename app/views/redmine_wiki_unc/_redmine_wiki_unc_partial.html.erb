@@ -3,7 +3,8 @@
   if header_tags_content.present?
     content_for :header_tags do
       javascript_include_tag('redmine_wiki_unc_replace_path.js', plugin: 'redmine_wiki_unc') +
-      stylesheet_link_tag('redmine_wiki_unc.css', plugin: 'redmine_wiki_unc')
+      stylesheet_link_tag('redmine_wiki_unc.css', plugin: 'redmine_wiki_unc') +
+      javascript_include_tag('clipboard.min.js', plugin: 'redmine_wiki_unc')
     end
   end
 

@@ -2,6 +2,15 @@
   /* https://www.iconfinder.com/icons/3937335/chain_hyperlink_internet_link_linked_icon */
   background-image: url('../images/bt_wiki_unc.png');
 }
-.wiki span.path_unc {
+span.path_unc {
   font-size: 0;
+}
+
+span.path_unc_outer a.path_unc.icon {
+  display: none;
+  margin: 0 2px;
+}
+
+span.path_unc_outer:hover a.path_unc.icon {
+  display: inline-block !important;
 }
