@@ -115,7 +115,7 @@
               link = ' ' + encoded + ' ';
             } else {
               var textFormatting = $('#js-redmine-wiki-unc-script-tag').data('text-formatting');
-              if (textFormatting == 'markdown') {
+              if (textFormatting == 'markdown' || textFormatting == 'common_mark') {
                 link = ' [' + text + '](' + encoded + ') ';
               } else {
                 link = ' "' + text + '":' + encoded + ' ';
