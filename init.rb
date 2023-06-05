@@ -1,6 +1,6 @@
 require 'redmine'
-require File.expand_path('../lib/redmine_wiki_unc_hooks', __FILE__)
-require File.expand_path('../lib/redmine_wiki_unc/field_format.rb', __FILE__)
+require_dependency File.expand_path('../lib/redmine_wiki_unc_hooks', __FILE__)
+require_dependency File.expand_path('../lib/redmine_wiki_unc/field_format.rb', __FILE__)
 
 class UncHelper
   def initialize
