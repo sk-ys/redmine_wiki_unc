@@ -71,7 +71,17 @@
           }
         }
         inputAddress.keyup(updateInputAddress);
-        inputAddress.on('paste', function(){
+        inputAddress.on('paste', function(e){
+          if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
+            const html = e.originalEvent.clipboardData.getData('text/html');
+            const $anchor = $('<dummy/>').html(html).find('a').eq(0);
+            if ($anchor.length > 0)
+            {
+              e.preventDefault();
+              inputAddress.val($anchor.attr("href"));
+              inputText.val($anchor.text());
+            }
+          }
           setTimeout(updateInputAddress, 100);  // Failed if no delay
         });
         inputAddress.keypress(function(e){
