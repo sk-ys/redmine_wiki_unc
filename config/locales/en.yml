@@ -6,3 +6,5 @@ en:
   label_address: Address
   label_text_to_display: Text to display
   label_path_unc: unc file/directory path
+  label_decode: Decode
+  label_regenerate_link_title: Regenerate link title

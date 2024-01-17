@@ -14,3 +14,8 @@ span.path_unc_outer a.path_unc.icon {
 span.path_unc_outer:hover a.path_unc.icon {
   display: inline-block !important;
 }
+
+#js-redmine-wiki-unc-regenerate-link-title {
+  margin: 0 0.3em;
+  cursor: pointer;
+}

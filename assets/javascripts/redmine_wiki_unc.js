@@ -8,7 +8,17 @@
                 +   '<input type="text" name="address" style="width:100%" id="js-redmine-wiki-unc-input-address"><br>'
                 +   '<span style="float:right"><a href="javascript:void(0)" id="js-redmine-wiki-unc-a-try-link">' + WikiUnc.context.labelTryLink + '</a></span>'
                 + '</p>'
-                + '<p>' + WikiUnc.context.labelTextToDisplay + '<br><input type="text" name="address" style="width:100%" id="js-redmine-wiki-unc-input-text"></p>'
+                + '<p>'
+                +   '<span>' + WikiUnc.context.labelTextToDisplay + '</span>'
+                +   '<span '
+                +     'id="js-redmine-wiki-unc-regenerate-link-title" '
+                +     'class="ui-icon ui-icon-refresh"'
+                +     'title="' + WikiUnc.context.labelRegenerateLinkTitle +'"'
+                +   '></span>'
+                +   '<input id="js-redmine-wiki-unc-decode" type="checkbox" checked>'
+                +   '<label for="wiki-unc-decode">' + WikiUnc.context.labelDecode + '</span>'
+                +   '<br>'
+                +   '<input type="text" name="address" style="width:100%" id="js-redmine-wiki-unc-input-text"></p>'
                 + '<p class="buttons">'
                 +   '<input type="button" value="OK"     id="js-redmine-wiki-unc-button-ok" disabled> '
                 +   '<input type="button" value="' + WikiUnc.context.buttonCancel + '" id="js-redmine-wiki-unc-button-cancel">'
@@ -33,11 +43,11 @@
       return "";
     }
   };
-  var autoInputBasename = function(inputText, inputAddress) {
+  var autoInputBasename = function(inputText, inputAddress, decode = false) {
     if (inputText.val() == "") {
       var basename = getBasename(getCleanedAddress(inputAddress));
       if (basename != "") {
-        inputText.val(basename);
+        inputText.val(decode ? decodeURIComponent(basename) : basename);
       }
     }
   }
@@ -56,6 +66,8 @@
         var tryLink      = $('#js-redmine-wiki-unc-a-try-link');
         var buttonOk     = $('#js-redmine-wiki-unc-button-ok');
         var buttonCancel = $('#js-redmine-wiki-unc-button-cancel');
+        var buttonRegenerateLinkTitle = $('#js-redmine-wiki-unc-regenerate-link-title');
+        var checkboxDecode = $('#js-redmine-wiki-unc-decode');
 
         var updateInputAddress = function(){
           console.log('updateInputAddress');
@@ -63,7 +75,7 @@
             buttonOk.prop('disabled', false);
             tryLink.attr('href', getCleanedAddress(inputAddress));
             tryLink.attr('target', '_blank');
-            autoInputBasename(inputText, inputAddress);
+            autoInputBasename(inputText, inputAddress, checkboxDecode.is(':checked'));
           } else {
             buttonOk.prop('disabled', true);
             tryLink.attr('href', 'javascript:void(0)');
@@ -144,6 +156,11 @@
         buttonCancel.click(function(){
           hideModal(this);
         });
+        buttonRegenerateLinkTitle.click(function(){
+          // Clear input area
+          inputText.val("");
+          updateInputAddress();
+        })
 
         $('#ajax-modal').off('dialogclose'); // If "off" is not executed, the event is added many times.
         showModal('ajax-modal', '60%');
