@@ -134,13 +134,13 @@
           } else {
             var encoded = getEncodedAddress(inputAddress);
             if (encoded == text) {
-              link = ' ' + encoded + ' ';
+              link = encoded;
             } else {
               var textFormatting = $('#js-redmine-wiki-unc-script-tag').data('text-formatting');
               if (textFormatting == 'markdown' || textFormatting == 'common_mark') {
-                link = ' [' + text + '](' + encoded + ') ';
+                link = '[' + text + '](' + encoded + ')';
               } else {
-                link = ' "' + text + '":' + encoded + ' ';
+                link = '"' + text + '":' + encoded;
               }
             }
           }
@@ -149,6 +149,15 @@
           var scroll = that.textarea.scrollTop;
           var left   = that.textarea.value.substring(0, pos);
           var right  = that.textarea.value.substring(pos);
+          
+          // Insert spaces to match the left and right strings
+          if (left !== "" && !/[ |\n|\t]$/.test(left)) {
+            link = " " + link
+          }
+          if (right !== "" && !/^[ |\n|\t]/.test(right)) {
+            link = link + " "
+          }
+          
           that.textarea.value     = left + link + right;
           that.textarea.scrollTop = scroll;
           that.textarea.selectionStart = that.textarea.selectionEnd = (left + link).length;
