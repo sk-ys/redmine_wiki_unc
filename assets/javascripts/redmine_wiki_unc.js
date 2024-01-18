@@ -13,7 +13,7 @@
                 +   '<span '
                 +     'id="js-redmine-wiki-unc-regenerate-link-title" '
                 +     'class="ui-icon ui-icon-refresh"'
-                +     'title="' + WikiUnc.context.labelRegenerateLinkTitle +'"'
+                +     'title="' + WikiUnc.context.labelRegenerateTextToDisplay +'"'
                 +   '></span>'
                 +   '<input id="js-redmine-wiki-unc-decode" type="checkbox" checked>'
                 +   '<label for="wiki-unc-decode">' + WikiUnc.context.labelDecode + '</span>'

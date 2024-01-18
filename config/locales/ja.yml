@@ -7,4 +7,4 @@ ja:
   label_text_to_display: 表示文字列
   label_path_unc: ネットワークフォルダ/ファイルパス
   label_decode: デコード
-  label_regenerate_link_title: リンクタイトルを再生成する
+  label_regenerate_text_to_display: 表示文字列を再生成する

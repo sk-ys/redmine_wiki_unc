@@ -7,4 +7,4 @@ en:
   label_text_to_display: Text to display
   label_path_unc: unc file/directory path
   label_decode: Decode
-  label_regenerate_link_title: Regenerate link title
+  label_regenerate_text_to_display: Regenerate text to display
