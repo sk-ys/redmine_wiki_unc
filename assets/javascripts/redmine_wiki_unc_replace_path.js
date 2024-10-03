@@ -3,14 +3,6 @@
     return "file:///" + path_unc.replace(/"/g, "").replace(/\\/g, "/");
   }
 
-  function enableClipboardJs(pathUncElem) {
-    new ClipboardJS(pathUncElem, {
-      text: (trigger) => {
-        return trigger.getAttribute("data-clipboard-text");
-      },
-    });
-  }
-
   function formatUncTag(pathUncElem) {
     const $pathUncElem = $(pathUncElem);
 
@@ -31,12 +23,9 @@
             "data-clipboard-text": this.innerHTML.replace(/"/g, ""),
             style: "cursor: pointer",
             title: "パスをコピーする",
+            onclick: "copyTextToClipboard(this)",
           })
         );
-    });
-
-    setTimeout(() => {
-      enableClipboardJs($pathUncElem[0]);
     });
   }
 
