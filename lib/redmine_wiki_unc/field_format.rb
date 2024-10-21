@@ -4,7 +4,7 @@ module RedmineWikiUnc
 
     def formatted_value(view, custom_field, value, customized = nil, html = false)
       if value.present?
-        h = UncHelper.new
+        h = RedmineWikiUnc::UncHelper.new
         begin
           h.get_tag([value, File.basename(value)])
         rescue
