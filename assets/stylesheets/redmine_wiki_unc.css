@@ -9,6 +9,7 @@ span.path_unc {
 span.path_unc_outer a.path_unc.icon {
   display: none;
   margin: 0 2px;
+  cursor: pointer;
 }
 
 span.path_unc_outer:hover a.path_unc.icon {

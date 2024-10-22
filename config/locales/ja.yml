@@ -8,3 +8,4 @@ ja:
   label_path_unc: ネットワークフォルダ/ファイルパス
   label_decode: デコード
   label_regenerate_text_to_display: 表示文字列を再生成する
+  label_copy_path: パスをコピーする
