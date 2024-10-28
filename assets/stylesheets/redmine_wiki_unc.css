@@ -22,6 +22,6 @@ span.path_unc_outer a:not(.icon) {
   cursor: pointer;
 }
 
-.absolute_path_for_email {
+.full_unc_path_for_email {
   display: none;
 }

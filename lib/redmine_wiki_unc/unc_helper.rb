@@ -32,7 +32,7 @@ module RedmineWikiUnc
       html = <<~TEXT
         <span class='path_unc_outer'>
           <a class='path_unc' href='#{unc_to_file_proto(unc)}' target='_blank' style='display:none; /* for email */'>#{label}</a>
-          <span class="absolute_path_for_email">\"#{unc}\"</span>
+          <span class="full_unc_path_for_email">\"#{unc}\"</span>
           <a class='path_unc icon-only icon icon-copy' data-clipboard-text='#{unc}' title='#{I18n.t(:label_copy_path)}' onclick='copyTextToClipboard(this)'></a>
         </span>
       TEXT
