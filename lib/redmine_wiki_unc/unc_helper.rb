@@ -29,13 +29,15 @@ module RedmineWikiUnc
     def get_tag(args)
       return "(No parameters are specified. A UNC path is needed at least.)" if args.empty?
       unc, label = parse_args(args)
-      html = <<~TEXT
-        <span class='path_unc_outer'>
-          <a class='path_unc' href='#{unc_to_file_proto(unc)}' target='_blank' style='display:none; /* for email */'>#{label}</a>
-          <span class="full_unc_path_for_email">\"#{unc}\"</span>
-          <a class='path_unc icon-only icon icon-copy' data-clipboard-text='#{unc}' title='#{I18n.t(:label_copy_path)}' onclick='copyTextToClipboard(this)'></a>
-        </span>
-      TEXT
+      display_full_unc_path_for_email = Setting.plugin_redmine_wiki_unc[:display_full_unc_path_for_email] == '1'
+      html = ""
+      html += "<span class='path_unc_outer'>"
+      html += "<a class='path_unc' href='#{unc_to_file_proto(unc)}' target='_blank'"
+      html += " style='display:none; /* for email */'" if display_full_unc_path_for_email
+      html += ">#{label}</a>"
+      html += "<span class='full_unc_path_for_email'>\"#{unc}\"</span>" if display_full_unc_path_for_email
+      html += "<a class='path_unc icon-only icon icon-copy' data-clipboard-text='#{unc}' title='#{I18n.t(:label_copy_path)}' onclick='copyTextToClipboard(this)'></a>"
+      html += "</span>"
       return html.html_safe
     end
   end

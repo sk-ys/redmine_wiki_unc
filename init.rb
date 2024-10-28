@@ -8,6 +8,10 @@ Redmine::Plugin.register :redmine_wiki_unc do
   author 'Takashi Oguma'
   description 'This is a plugin for macro of Redmine Wiki'
   version '0.0.4'
+  settings default: {
+    display_full_unc_path_for_email: '1',
+  },
+  partial: 'settings/wiki_unc_settings'
 
   Redmine::WikiFormatting::Macros.register do
     desc <<DESC
