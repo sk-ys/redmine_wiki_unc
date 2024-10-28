@@ -9,7 +9,6 @@ module RedmineWikiUnc
     end
 
     def unc_to_file_proto(str)
-      Rails.logger.info "str == #{str}, is_unc? == #{is_unc?(str)}, head=#{@head.to_s}"
       return "" if !is_unc?(str)
       str.gsub(@head, "file://").gsub(/\\/, "/")
     end
