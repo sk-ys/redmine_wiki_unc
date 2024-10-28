@@ -2,9 +2,6 @@
   /* https://www.iconfinder.com/icons/3937335/chain_hyperlink_internet_link_linked_icon */
   background-image: url('../images/bt_wiki_unc.png');
 }
-span.path_unc {
-  font-size: 0;
-}
 
 span.path_unc_outer a.path_unc.icon {
   display: none;
@@ -16,7 +13,15 @@ span.path_unc_outer:hover a.path_unc.icon {
   display: inline-block !important;
 }
 
+span.path_unc_outer a:not(.icon) {
+  display: inline !important;
+}
+
 #js-redmine-wiki-unc-regenerate-link-title {
   margin: 0 0.3em;
   cursor: pointer;
+}
+
+.absolute_path_for_email {
+  display: none;
 }
