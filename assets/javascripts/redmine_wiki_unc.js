@@ -1,5 +1,6 @@
 (function () {
   if(typeof jsToolBar === 'undefined') return false;
+  const uncMacroRegex = /\{\{unc\(([^\s,]+)(?:,\s*([^)]+))?\)\}\}/i;
     
   // Create button
   var modalHtml = '<h3 class="title">' + WikiUnc.context.labelInsertLink + '</h3>'
@@ -52,6 +53,37 @@
     }
   }
 
+  function typeOfText(str) {
+    const httpRegex = /^https?:\/\//i;
+    const fileRegex = /^file:\/\//i;
+    const uncRegex = /^\\\\/;
+
+    if (uncMacroRegex.test(str)) {
+      return "UncMacro";
+    } else if (httpRegex.test(str)) {
+      return "HttpScheme";
+    } else if (fileRegex.test(str)) {
+      return "FileScheme";
+    } else if (uncRegex.test(str)) {
+      return "UncPath";
+    } else {
+      return "OtherString";
+    }
+  }
+  
+  function parseUncMacro(macro) {
+    const match = macro.match(uncMacroRegex);
+
+    if (match) {
+        return {
+            address: match[1].trim(),
+            title: match[2] ? match[2].trim() : ""
+        };
+    } else {
+        return null;
+    }
+}
+
   var button = {
     title: WikiUnc.context.labelInsertLink,
     type:  'button',
@@ -59,6 +91,14 @@
     class: 'jstb_wiki_unc',
     fn: {
       wiki: function() {
+        const textarea = this.textarea;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const scroll = textarea.scrollTop;
+        const left   = textarea.value.substring(0, start);
+        const right  = textarea.value.substring(end);
+        const selectedText = textarea.value.substring(start, end);
+
         $('#ajax-modal').html(modalHtml);
         var that = this;
         var inputAddress = $('#js-redmine-wiki-unc-input-address');
@@ -69,8 +109,7 @@
         var buttonRegenerateLinkTitle = $('#js-redmine-wiki-unc-regenerate-link-title');
         var checkboxDecode = $('#js-redmine-wiki-unc-decode');
 
-        var updateInputAddress = function(){
-          console.log('updateInputAddress');
+        function updateInputAddress(){
           if (isInputValid(inputAddress)) {
             buttonOk.prop('disabled', false);
             tryLink.attr('href', getCleanedAddress(inputAddress));
@@ -82,6 +121,22 @@
             tryLink.removeAttr('target');
           }
         }
+
+        // Show selected text into input text
+        const textType = typeOfText(selectedText);
+        if (textType === "UncMacro") {
+          const ret = parseUncMacro(selectedText);
+          if (ret) {
+            inputAddress.val(ret.address);
+            inputText.val(ret.title);
+          }
+        } else if (textType === "OtherString") {
+          inputText.val(selectedText);
+        } else {
+          inputAddress.val(selectedText);
+        }
+        updateInputAddress();
+
         inputAddress.keyup(updateInputAddress);
         inputAddress.on('paste', function(e){
           if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
@@ -145,11 +200,6 @@
             }
           }
           
-          var pos    = that.textarea.selectionStart;
-          var scroll = that.textarea.scrollTop;
-          var left   = that.textarea.value.substring(0, pos);
-          var right  = that.textarea.value.substring(pos);
-          
           // Insert spaces to match the left and right strings
           if (left !== "" && !/[ |\n|\t]$/.test(left)) {
             link = " " + link
@@ -158,9 +208,9 @@
             link = link + " "
           }
           
-          that.textarea.value     = left + link + right;
-          that.textarea.scrollTop = scroll;
-          that.textarea.selectionStart = that.textarea.selectionEnd = (left + link).length;
+          textarea.value     = left + link + right;
+          textarea.scrollTop = scroll;
+          textarea.selectionStart = textarea.selectionEnd = (left + link).length;
         });
         buttonCancel.click(function(){
           hideModal(this);
