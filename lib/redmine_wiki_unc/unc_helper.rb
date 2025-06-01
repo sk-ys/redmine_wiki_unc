@@ -35,8 +35,8 @@ module RedmineWikiUnc
       html += " style='display:none; /* for email */'" if display_full_unc_path_for_email
       html += ">#{label}</a>"
       html += "<span class='full_unc_path_for_email'>\"#{unc}\"</span>" if display_full_unc_path_for_email
-      # Note: Intentionally add an empty href to prevent an error with the Redmine Lightbox 2 plugin.
-      html += "<a class='path_unc icon-only icon icon-copy' href='javascript:void(0)' data-clipboard-text='#{unc}' title='#{I18n.t(:label_copy_path)}' onclick='copyTextToClipboard(this)'></a>"
+      # Note: Use button tag instead of a tag to prevent an error with the Redmine Lightbox 2 plugin.
+      html += "<button class='path_unc icon-only icon icon-copy' data-clipboard-text='#{unc}' title='#{I18n.t(:label_copy_path)}' onclick='copyTextToClipboard(this)'></button>"
       html += "</span>"
       return html.html_safe
     end

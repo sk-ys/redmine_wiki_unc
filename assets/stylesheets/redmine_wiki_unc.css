@@ -3,17 +3,19 @@
   background-image: url('../images/bt_wiki_unc.png');
 }
 
-span.path_unc_outer a.path_unc.icon {
+span.path_unc_outer button.path_unc.icon {
   display: none;
   margin: 0 2px;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
-span.path_unc_outer:hover a.path_unc.icon {
+span.path_unc_outer:hover button.path_unc.icon {
   display: inline-block !important;
 }
 
-span.path_unc_outer a:not(.icon) {
+span.path_unc_outer a {
   display: inline !important;
 }
 
