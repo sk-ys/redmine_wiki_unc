@@ -240,4 +240,33 @@
   }
   jsToolBar.prototype.elements = elements_new;
 
+
+  if (typeof WikiUnc !== "undefined") {
+    WikiUnc.fn = WikiUnc.fn || {};
+    WikiUnc.fn.copyTextToClipboard = function (target) {
+      const jQueryUiTooltip = document.querySelector(".ui-tooltip-content");
+
+      const text = target.getAttribute("data-clipboard-text");
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        if (jQueryUiTooltip.innerHTML == WikiUnc.context.messageCopyPath) {
+          jQueryUiTooltip.innerHTML = WikiUnc.context.messageCopied;
+        }
+      } catch (err) {
+        console.error("Failed to copy text: ", err);
+        if (jQueryUiTooltip.innerHTML == WikiUnc.context.messageCopyPath) {
+          jQueryUiTooltip.innerHTML = WikiUnc.context.messageFailedToCopy;
+        }
+        return false;
+      } finally {
+        document.body.removeChild(textArea);
+      }
+      return true;
+    };
+  }
 }());
+// 

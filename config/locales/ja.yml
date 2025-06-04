@@ -1,6 +1,5 @@
 # Japanese strings go here
 ja:
-  my_label: "My label"
   label_insert_link: ネットワークフォルダ/ファイルへのリンクの挿入
   label_try_link: リンクのテスト
   label_address: アドレス
@@ -8,4 +7,6 @@ ja:
   label_path_unc: ネットワークフォルダ/ファイルパス
   label_decode: デコード
   label_regenerate_text_to_display: 表示文字列を再生成する
-  label_copy_path: パスをコピーする
+  message_copy_path: パスをコピーする
+  message_copied: コピーしました！
+  message_failed_to_copy: コピーに失敗しました
