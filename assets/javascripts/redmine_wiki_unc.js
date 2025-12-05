@@ -243,27 +243,37 @@
 
   if (typeof WikiUnc !== "undefined") {
     WikiUnc.fn = WikiUnc.fn || {};
-    WikiUnc.fn.copyTextToClipboard = function (target) {
+    WikiUnc.fn.copyTextToClipboard = function (target, event) {
+      event.preventDefault();
+
       const jQueryUiTooltip = document.querySelector(".ui-tooltip-content");
 
-      const text = target.getAttribute("data-clipboard-text");
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      document.body.appendChild(textArea);
-      textArea.select();
       try {
-        document.execCommand("copy");
-        if (jQueryUiTooltip.innerHTML == WikiUnc.context.messageCopyPath) {
-          jQueryUiTooltip.innerHTML = WikiUnc.context.messageCopied;
+        if (window.copyToClipboard) {
+          // Redmine 6 and later
+          const text = target.getAttribute("data-clipboard-text");
+          copyToClipboard(text);
+        } else if (window.copyTextToClipboard) {
+          // Redmine 5 and earlier
+          copyTextToClipboard(target);
+        }
+        if (jQueryUiTooltip) {
+          if (jQueryUiTooltip.innerHTML == WikiUnc.context.messageCopyPath) {
+            jQueryUiTooltip.innerHTML = WikiUnc.context.messageCopied;
+          }
+        } else {
+          $(target).attr("title", WikiUnc.context.messageCopied);
         }
       } catch (err) {
         console.error("Failed to copy text: ", err);
-        if (jQueryUiTooltip.innerHTML == WikiUnc.context.messageCopyPath) {
-          jQueryUiTooltip.innerHTML = WikiUnc.context.messageFailedToCopy;
+        if (jQueryUiTooltip) {
+          if (jQueryUiTooltip.innerHTML == WikiUnc.context.messageCopyPath) {
+            jQueryUiTooltip.innerHTML = WikiUnc.context.messageFailedToCopy;
+          }
+        } else {
+          $(target).attr("title", WikiUnc.context.messageFailedToCopy);
         }
         return false;
-      } finally {
-        document.body.removeChild(textArea);
       }
       return true;
     };

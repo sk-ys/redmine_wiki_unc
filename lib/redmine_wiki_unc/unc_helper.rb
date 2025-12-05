@@ -36,7 +36,12 @@ module RedmineWikiUnc
       html += ">#{label}</a>"
       html += "<span class='full_unc_path_for_email'>\"#{unc}\"</span>" if display_full_unc_path_for_email
       # Note: Use button tag instead of a tag to prevent an error with the Redmine Lightbox 2 plugin.
-      html += "<button class='path_unc icon-only icon icon-copy' data-clipboard-text='#{unc}' title='#{I18n.t(:message_copy_path)}' onclick='WikiUnc.fn.copyTextToClipboard(this)'></button>"
+      html += "<button class='path_unc icon-only icon icon-copy'" \
+          " data-clipboard-text='#{unc}'" \
+          " title='#{I18n.t(:message_copy_path)}'" \
+          " onclick='WikiUnc.fn.copyTextToClipboard(this, arguments[0])'" \
+          " onmouseover='$(this).attr({title: \"#{I18n.t(:message_copy_path)}\"})'>" \
+          "</button>"
       html += "</span>"
       return html.html_safe
     end
