@@ -83,7 +83,30 @@
     } else {
         return null;
     }
-}
+  }
+
+  function findUncMacroInLine(left, right, selectedText) {
+    const leftAfterLastNewline = left.substring(left.lastIndexOf("\n") + 1);
+    const rightBeforeNextNewline = right.substring(
+      0,
+      right.indexOf("\n") !== -1 ? right.indexOf("\n") : undefined,
+    );
+    const lineText =
+      leftAfterLastNewline + selectedText + rightBeforeNextNewline;
+    const uncMacroMatch = lineText.match(uncMacroRegex);
+
+    if (!uncMacroMatch) return null;
+
+    const uncMacroStart =
+      left.length - leftAfterLastNewline.length + uncMacroMatch.index;
+    const uncMacroEnd = uncMacroStart + uncMacroMatch[0].length;
+
+    return {
+      start: uncMacroStart,
+      end: uncMacroEnd,
+      text: uncMacroMatch[0],
+    };
+  }
 
   var button = {
     title: WikiUnc.context.labelInsertLink,
@@ -132,6 +155,22 @@
             inputText.val(ret.title);
           }
         } else if (textType === "OtherString") {
+          if (!selectedText.includes("\n")) {
+            const uncMacroMatch = findUncMacroInLine(left, right, selectedText);
+            if (uncMacroMatch) {
+              const { start: uncMacroStart, end: uncMacroEnd } = uncMacroMatch;
+              // Reselect the unc macro text and trigger the wiki_unc button
+              // click when cursor is within the unc macro
+              if (uncMacroStart <= start && end <= uncMacroEnd) {
+                setTimeout(() => {
+                  textarea.focus();
+                  textarea.setSelectionRange(uncMacroStart, uncMacroEnd);
+                  this.toolNodes.wiki_unc.click();
+                });
+                return;  // Return early to avoid further processing
+              }
+            }
+          }
           inputText.val(selectedText);
         } else {
           inputAddress.val(selectedText);
