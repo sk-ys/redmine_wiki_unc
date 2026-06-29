@@ -279,5 +279,62 @@
       return true;
     };
   }
+
+  function setupPasteHandler() {
+    const jsToolBarDrawOrg = jsToolBar.prototype.draw;
+    jsToolBar.prototype.draw = function () {
+      const jsToolBarInstance = this;
+      jsToolBarDrawOrg.call(jsToolBarInstance);
+
+      // Remove any existing paste handler to avoid duplicates
+      if (jsToolBarInstance.textarea._uncPathPasteHandler) {
+        jsToolBarInstance.textarea.removeEventListener(
+          "paste",
+          jsToolBarInstance.textarea._uncPathPasteHandler,
+        );
+      }
+
+      // Create the paste handler
+      const pasteHandler = (e) => {
+        // Get clipboard data
+        const clipboardData = e.clipboardData || window.clipboardData;
+        if (!clipboardData) return;
+
+        // Check if HTML data is available
+        const textData = clipboardData.getData("text/plain");
+        if (!textData || typeOfText(textData) !== "UncPath") return;
+
+        // Prevent default paste behavior
+        e.preventDefault();
+
+        // Insert the UNC path as a macro
+        const textarea = jsToolBarInstance.textarea;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+
+        // Insert the text
+        textarea.value =
+          textarea.value.substring(0, start) +
+          textData +
+          textarea.value.substring(end);
+
+        // Set cursor position after inserted text
+        const newPosition = start + textData.length;
+        textarea.setSelectionRange(start, newPosition);
+
+        // Trigger input event for any listeners
+        textarea.dispatchEvent(new Event("input", { bubbles: true }));
+
+        // Trigger the wiki_unc button click to open the modal
+        if (jsToolBarInstance?.toolNodes?.wiki_unc?.click) {
+          jsToolBarInstance.toolNodes.wiki_unc.click();
+        }
+      };
+
+      // Store reference and add listener
+      jsToolBarInstance.textarea._uncPathPasteHandler = pasteHandler;
+      jsToolBarInstance.textarea.addEventListener("paste", pasteHandler);
+    };
+  }
+  setupPasteHandler();
 }());
-// 
